@@ -1,0 +1,17 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "weather forecast",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "config": "^3.3.0",
+    "express": "^4.17.1",
+    "isomorphic-fetch": "^2.2.1",
+    "vue": "2.6.11",
+    "vue-server-renderer": "2.6.11"
+  }
+}

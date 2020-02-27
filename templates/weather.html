@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-lg display-4">
+            Weather Forecast
+        </div>
+        <div class="col-lg">
+            Updated: {{updated}}
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <div v-for="data in temp_data" class="col-lg-3 border border-dark rounded my-3 mx-3 bg-light">
+            <div class="row justify-content-around align-items-center text-center">
+                <div class="col-md-7  text-nowrap">
+                        {{(new Date(data.info.dt*1000)).toDateString()}}
+                        <br>
+                        average temp: {{data.temp.toFixed(2)}}°C
+                        <br>
+                        {{data.info.weather.description}}
+                </div>
+                <div class="col-md-3 my-1">
+                    <img v-bind:src="'icons/' + data.info.weather.icon + '.png'" class="bg-secondary"></img>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
