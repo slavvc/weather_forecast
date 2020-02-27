@@ -30,10 +30,10 @@ server.get('/favicon.ico', (req,res)=>{
 server.get('/', (req, res)=>{
     get_data.get_data()
     .then((weather)=>{
-        let date = new Date;
+        let date = new Date(weather.date);
         let app = new Vue({
             data:{
-                temp_data: weather ? weather : [],
+                temp_data: weather.data,
                 updated: date.toDateString() +  ' ' + date.toTimeString().split(' ')[0]
             },
             template: Fs.readFileSync('./templates/weather.html', 'utf-8')

@@ -2,9 +2,6 @@ let Fs = require('fs');
 let Config = require('config');
 require('isomorphic-fetch');
 
-
-// let api_key = 'b4abaffe39ce440d84f9c568b94f5589';
-// let location = 'Rostov-on-Don,ru';
 let api_key = Config.get("api_key");
 let location = Config.get("location");
 
@@ -76,11 +73,34 @@ function process_data(data){
 }
 
 function get_data(){
+    if(!Fs.existsSync('./data')){
+        Fs.mkdirSync('./data');
+    }
+    let fn = './data/weather.json';
     return fetch(url)
     .then((res)=>{
         return res.json();
     }).then((data)=>{
-        return process_data(data);
+        let weather = {
+            date: (new Date).getTime(),
+            data: data
+        };
+        Fs.writeFileSync(
+            fn, JSON.stringify(weather)
+        );
+        weather.data = process_data(weather.data);
+        return weather;
+    }).catch((err)=>{
+        if(Fs.existsSync(fn)){
+            return Fs.promises.readFile(fn, {encoding: "utf-8"})
+            .then((file)=>{
+                let weather = JSON.parse(file);
+                weather.data = process_data(weather.data);
+                return weather;
+            });
+        }else{
+            throw err;
+        }
     });
 }
 exports.get_data = get_data;
